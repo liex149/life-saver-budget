@@ -10,7 +10,8 @@
     "sequelize": "^6.3.5"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node seeds/seed.js"
   },
   "name": "life-saver-budget",
   "description": "[<img src=\"https://img.shields.io/badge/License-MIT-yellow.svg\">](https://opensource.org/licenses/MIT)",

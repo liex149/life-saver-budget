@@ -16,6 +16,32 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Render Transactions
+router.get('/', async (req, res) => {
+  try {
+    const transactionData = await Transaction.findAll({
+      include: [User, Category],  // Including associated User and Category details
+    });
+    // Pass serialized data and session flag into template
+    const transactions = transactionData.map((post) => post.get({ plain: true}));
+
+      res.render("transactions", {
+        transactions,
+        logged_in: req.session.logged_in,
+      })
+
+
+    res.status(200).json(transactions);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
+
+
+
 router.all("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {

@@ -37,6 +37,11 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+
+
+
+
 router.all("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -46,5 +51,6 @@ router.all("/login", (req, res) => {
 
   res.render("login");
 });
+
 
 module.exports = router;

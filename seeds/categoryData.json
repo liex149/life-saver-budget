@@ -1,0 +1,38 @@
+[
+  {
+    "category_name": "Housing",
+    "user_id": "1",
+  },
+  {
+    "category_name": "Foods",
+    "user_id": "1",
+  },
+  {
+    "category_name": "Transportation",
+    "user_id": "1",
+  }
+  {
+    "category_name": "Housing",
+    "user_id": "2",
+  },
+  {
+    "category_name": "Foods",
+    "user_id": "2",
+  },
+  {
+    "category_name": "Transportation",
+    "user_id": "2",
+  }
+  {
+    "category_name": "Housing",
+    "user_id": "3",
+  },
+  {
+    "category_name": "Foods",
+    "user_id": "3",
+  },
+  {
+    "category_name": "Transportation",
+    "user_id": "3",
+  }
+]

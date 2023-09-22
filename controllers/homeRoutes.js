@@ -37,11 +37,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
-
-
-
 router.all("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -52,22 +47,4 @@ router.all("/login", (req, res) => {
   res.render("login");
 });
 
-router.delete('/delete/:id', withAuth, async (req, res) => {
-  try {
-    const deleteBlogPost = await BlogPost.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-
-    if (!deleteBlogPost) {
-      res.status(404).json({ message: 'No blog post found with this id!' });
-      return;
-    }
-
-    res.status(200).json(deleteBlogPost);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 module.exports = router;

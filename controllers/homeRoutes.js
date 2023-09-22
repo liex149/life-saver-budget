@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 //Render Transactions
-router.get('/', async (req, res) => {
+router.get('/transactions', async (req, res) => {
   try {
     const transactionData = await Transaction.findAll({
       include: [User, Category],  // Including associated User and Category details
@@ -29,16 +29,28 @@ router.get('/', async (req, res) => {
         transactions,
         logged_in: req.session.logged_in,
       })
-
-
-    res.status(200).json(transactions);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+//Render Transactions
+router.get('/logger', async (req, res) => {
+  try {
+    const transactionData = await Transaction.findAll({
+      include: [User, Category],  // Including associated User and Category details
+    });
+    // Pass serialized data and session flag into template
+    const transactions = transactionData.map((post) => post.get({ plain: true}));
 
-
+      res.render("logger", {
+        transactions,
+        logged_in: req.session.logged_in,
+      })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 

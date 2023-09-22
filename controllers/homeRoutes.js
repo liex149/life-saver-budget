@@ -1,7 +1,9 @@
 const withAuth = require('../utils/auth');
 const router = require('express').Router();
-const express = require('express')
+const express = require('express');
+const {User, Category, Transaction} = require('../models');
 const app = express()
+
 
 //Redner homepage
 router.get("/", async (req, res) => {

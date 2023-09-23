@@ -1,15 +1,18 @@
 <div class="form-group">
     <label for="Log Transaction">Log Transaction</label>
-    <input type="number" class="form-control" id="transactionAmt" placeholder="Enter Transaction Amount">
+    <input type="number" class="form-control my-2" id="transactionAmt" placeholder="Enter Transaction Amount">
   </div>
 
+   <small id="emailHelp" class="form-text text-muted">Enter a transaction amount, then submit by clicking a category</small>
+
+<div>
 {{#each categories as |category|}}
 
 
-    <button id="category" class="newTransaction btn btn-primary" data-index-number="{{category.id}}">{{category.category_name}}</button>
+    <button id="category" class="newTransaction btn btn-primary my-2" data-index-number="{{category.id}}">{{category.category_name}}</button>
 
 
 {{/each}}
-
+</div>
 <a href="/editCategory" class="btn btn-info" >Edit Categories</a>
 <script src="./js/logtransaction.js"></script>

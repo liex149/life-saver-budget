@@ -12,33 +12,35 @@
 
 </head>
 
-<body>
-
+<body class="mx-auto" style="width: 500px;">
+ <header class="p-2d-flex justify-content-center text-center p-3 mb-2 bg-white text-dark">
   <h1> Budget Time</h1>
 
-        <nav class="pb-2">
-        <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
-          <a href="/home">Home</a>
-          <a href="/transactions">transactions</a>
-            <a href="/logger">logger</a>
-          <button class="btn btn-primary" id="logout">logout</button>
-        {{else}}
-          <a href="/login">login</a>
+  <nav>
+    <!-- Conditionally render login or logout links -->
+    {{#if logged_in}}
+    <a href="/home">Home</a> |
+    <a href="/transactions">Transactions</a> |
+    <a href="/logger">Logger</a> |
+    <button type="button"class="btn btn-link" id="logout">Logout</button>
+    {{else}}
+    <p class="text-justify text-lg-left">
+      <a href="/login">Login</a>
+    </p>
 
-        {{/if}}
-      </nav>
+    {{/if}}
+  </nav>
+</header>
 
+  <main>
+    {{{body}}}
+  </main>
+  <footer>
 
-<main>
-{{{body}}}
-</main>
-<footer>
-
-</footer>
-<!-- Render script for logged in users only -->
+  </footer>
+  <!-- Render script for logged in users only -->
   {{#if logged_in}}
-    <script src="/js/logout.js"></script>
+  <script src="/js/logout.js"></script>
   {{/if}}
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

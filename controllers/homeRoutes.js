@@ -16,6 +16,25 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Render Home page (graphs and stuff)
+router.get('/home', withAuth, async (req, res) => {
+  try {
+    const categoryData = await Category.findAll({
+      include: { all: true, nested: true },
+      where: {user_id: req.session.user_id},
+    });
+    // Pass serialized data and session flag into template
+    const categories = categoryData.map((cat) => cat.get({ plain: true}));
+
+      res.render("home", {
+        categories,
+        logged_in: req.session.logged_in,
+      })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //Render Transactions
 router.get('/transactions', async (req, res) => {
   try {
@@ -35,16 +54,17 @@ router.get('/transactions', async (req, res) => {
 });
 
 //Render Transactions
-router.get('/logger', async (req, res) => {
+router.get('/logger', withAuth, async (req, res) => {
   try {
-    const transactionData = await Transaction.findAll({
-      include: [User, Category],  // Including associated User and Category details
+    const categoryData = await Category.findAll({
+      include: { all: true, nested: true },
+      where: {user_id: req.session.user_id},
     });
     // Pass serialized data and session flag into template
-    const transactions = transactionData.map((post) => post.get({ plain: true}));
+    const categories = categoryData.map((cat) => cat.get({ plain: true}));
 
       res.render("logger", {
-        transactions,
+        categories,
         logged_in: req.session.logged_in,
       })
   } catch (err) {

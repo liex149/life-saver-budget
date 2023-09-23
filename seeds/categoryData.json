@@ -34,5 +34,21 @@
   {
     "category_name": "Transportation",
     "user_id": "3"
+  },
+  {
+    "category_name": "Paycheck",
+    "user_id": "4"
+  },
+  {
+    "category_name": "Car",
+    "user_id": "4"
+  },
+  {
+    "category_name": "Parents",
+    "user_id": "4"
+  },
+  {
+    "category_name": "Foods",
+    "user_id": "4"
   }
 ]

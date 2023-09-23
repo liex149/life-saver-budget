@@ -1,1 +1,13 @@
-<div>this is where choose categories and post transactions</div>
+<div class="form-group">
+    <label for="Log Transaction">Log Transaction</label>
+    <input type="number" class="form-control" id="logtransaction" placeholder="Enter Tranaction Amount">
+  </div>
+
+{{#each categories as |category|}}
+
+
+    <a href="/logtransaction/{{category.id}}" class="btn btn-primary category{{category.id}}">{{category.category_name}}</a>
+
+
+{{/each}}
+

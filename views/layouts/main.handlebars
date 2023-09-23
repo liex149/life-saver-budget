@@ -19,14 +19,11 @@
         <nav class="pb-2">
         <!-- Conditionally render login or logout links -->
         {{#if logged_in}}
-          <a href="/">Home</a>
+          <a href="/home">Home</a>
           <a href="/transactions">transactions</a>
             <a href="/logger">logger</a>
           <button class="btn btn-primary" id="logout">logout</button>
         {{else}}
-          <a href="/">Home</a>
-          <a href="/transactions">transactions</a>
-            <a href="/logger">logger</a>
           <a href="/login">login</a>
 
         {{/if}}

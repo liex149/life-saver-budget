@@ -145,6 +145,44 @@ router.get("/editCategory", withAuth, async (req, res) => {
   }
 });
 
+//router to new newcategory page
+router.get("/newcat", withAuth, async (req, res) => {
+  try {
+    const categoryData = await Category.findAll({
+      include: { all: true, nested: true },
+    });
+
+    // Serialize data so the template can read it
+    const categories = categoryData.map((post) => post.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    res.render("newCat", {
+      categories,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//post new category
+router.post("/newcat", withAuth, async (req, res) => {
+  // create a new blogpost
+  try {
+    const categoryData = await Category.create({
+      category_name: req.body.category_name,
+      user_id: req.session.user_id,
+    });
+    if (!categoryData) {
+      res.status(404).json({ message: "Couldn't create blogpost" });
+      return;
+    }
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.delete("/delete/:id", withAuth, async (req, res) => {
   try {
     const categoryData = await Category.destroy({

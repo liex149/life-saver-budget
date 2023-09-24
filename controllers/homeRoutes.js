@@ -1,11 +1,9 @@
-const withAuth = require('../utils/auth');
-const router = require('express').Router();
-const express = require('express');
-const {User, Category, Transaction} = require('../models');
-const app = express()
-const hello = require('../public/js/testing.js')
-
-const sequelize = require('../config/connection');
+const withAuth = require("../utils/auth");
+const router = require("express").Router();
+const express = require("express");
+const { User, Category, Transaction } = require("../models");
+const app = express();
+const sequelize = require("../config/connection");
 
 //Redner homepage
 router.get("/", async (req, res) => {
@@ -19,65 +17,86 @@ router.get("/", async (req, res) => {
 });
 
 //Render Home page (graphs and stuff)
-router.get('/home', withAuth, async (req, res) => {
+router.get("/home", withAuth, async (req, res) => {
   try {
-
     const userData = await Transaction.findAll({
+      //the third attribute is the same of amounts over category ID
       attributes: [
-        'user_id', 'category_id', [sequelize.fn('sum',sequelize.col('amount')),'total_amount'],
+        "user_id",
+        "category_id",
+        [sequelize.fn("sum", sequelize.col("amount")), "total_amount"],
       ],
-      group:['category_id'],
-      where: {user_id: req.session.user_id},
+      group: ["category_id"],
+      where: { user_id: req.session.user_id },
+      //join on Category to get the names
+      include: [
+        {
+          model: Category,
+          attributes: ["category_name"],
+        },
+      ],
     });
     // Pass serialized data and session flag into template
-    const users = userData.map((cat) => cat.get({ plain: true}));
+    const userAMTbyCategory = userData.map((cat) => cat.get({ plain: true }));
 
-    // for (i=0;i<users.length;i++){
-console.table(users)
-// }
+    console.log(userAMTbyCategory);
+
+    const cd = [];
+    const tamt = [];
+
+    for (i = 0; i < userAMTbyCategory.length; i++) {
+      cd.push(userAMTbyCategory[i].category.category_name);
+      tamt.push(userAMTbyCategory[i].total_amount);
+    }
+    console.log(cd);
+    console.log(tamt);
 
 
-      res.render("home", {
-       
-        logged_in: req.session.logged_in,
-      })
+    
+    res.render("home", {
+      cd,
+      tamt,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 //Render Transactions
-router.get('/transactions', async (req, res) => {
+router.get("/transactions", async (req, res) => {
   try {
     const transactionData = await Transaction.findAll({
-      include: [User, Category],  // Including associated User and Category details
+      include: [User, Category], // Including associated User and Category details
     });
     // Pass serialized data and session flag into template
-    const transactions = transactionData.map((post) => post.get({ plain: true}));
+    const transactions = transactionData.map((post) =>
+      post.get({ plain: true })
+    );
 
-      res.render("transactions", {
-        transactions,
-        logged_in: req.session.logged_in,
-      })
+    res.render("transactions", {
+      transactions,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 //Render Transactions
-router.get('/logger', withAuth, async (req, res) => {
+router.get("/logger", withAuth, async (req, res) => {
   try {
     const categoryData = await Category.findAll({
       include: { all: true, nested: true },
-      where: {user_id: req.session.user_id},
+      where: { user_id: req.session.user_id },
     });
     // Pass serialized data and session flag into template
-    const categories = categoryData.map((cat) => cat.get({ plain: true}));
+    const categories = categoryData.map((cat) => cat.get({ plain: true }));
 
-      res.render("logger", {
-        categories,
-        logged_in: req.session.logged_in,
-      })
+    res.render("logger", {
+      categories,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -94,7 +113,9 @@ router.post("/logTransaction", withAuth, async (req, res) => {
     });
 
     if (!transactionData) {
-      res.status(404).json({ message: "No transactionData found with that id!" });
+      res
+        .status(404)
+        .json({ message: "No transactionData found with that id!" });
       return;
     }
 
@@ -104,21 +125,20 @@ router.post("/logTransaction", withAuth, async (req, res) => {
   }
 });
 
-
 //Render editCategory
-router.get('/editCategory', withAuth, async (req, res) => {
+router.get("/editCategory", withAuth, async (req, res) => {
   try {
     const categoryData = await Category.findAll({
       include: { all: true, nested: true },
-      where: {user_id: req.session.user_id},
+      where: { user_id: req.session.user_id },
     });
     // Pass serialized data and session flag into template
-    const categories = categoryData.map((cat) => cat.get({ plain: true}));
+    const categories = categoryData.map((cat) => cat.get({ plain: true }));
 
-      res.render("editCategory", {
-        categories,
-        logged_in: req.session.logged_in,
-      })
+    res.render("editCategory", {
+      categories,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -133,6 +153,5 @@ router.all("/login", (req, res) => {
 
   res.render("login");
 });
-
 
 module.exports = router;

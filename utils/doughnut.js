@@ -1,13 +1,9 @@
-
-
-function doughnut(labels, data){
-
-
+var data = [12, 50, 3, 23];
 
 new Chart("myChart", {
   type: "doughnut",
   data: {
-    labels: labels,
+    labels: ["Red", "Orange", "Yellow", "Green"],
     datasets: [{
         backgroundColor: [
           "#FF0000",
@@ -20,7 +16,7 @@ new Chart("myChart", {
           "#4a85ee"
 
         ],
-        data: data
+        data: [12, 50, 3, 23]
         }],
       },
   options: {
@@ -31,6 +27,3 @@ new Chart("myChart", {
     responsive: true,
    },
 });
-}
-
-doughnut([ 'Paycheck', 'Car', 'Foods', 'Parents' ],[ '58.42', '700.21', '200.42', '10.21' ]);

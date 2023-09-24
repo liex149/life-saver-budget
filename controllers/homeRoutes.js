@@ -3,7 +3,9 @@ const router = require('express').Router();
 const express = require('express');
 const {User, Category, Transaction} = require('../models');
 const app = express()
+const hello = require('../public/js/testing.js')
 
+const sequelize = require('../config/connection');
 
 //Redner homepage
 router.get("/", async (req, res) => {
@@ -19,15 +21,24 @@ router.get("/", async (req, res) => {
 //Render Home page (graphs and stuff)
 router.get('/home', withAuth, async (req, res) => {
   try {
-    const categoryData = await Category.findAll({
-      include: { all: true, nested: true },
+
+    const userData = await Transaction.findAll({
+      attributes: [
+        'user_id', 'category_id', [sequelize.fn('sum',sequelize.col('amount')),'total_amount'],
+      ],
+      group:['category_id'],
       where: {user_id: req.session.user_id},
     });
     // Pass serialized data and session flag into template
-    const categories = categoryData.map((cat) => cat.get({ plain: true}));
+    const users = userData.map((cat) => cat.get({ plain: true}));
+
+    // for (i=0;i<users.length;i++){
+console.table(users)
+// }
+
 
       res.render("home", {
-        categories,
+       
         logged_in: req.session.logged_in,
       })
   } catch (err) {

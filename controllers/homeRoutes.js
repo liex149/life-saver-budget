@@ -5,6 +5,7 @@ const { User, Category, Transaction } = require("../models");
 const app = express();
 const sequelize = require("../config/connection");
 
+
 //Redner homepage
 router.get("/", async (req, res) => {
   try {
@@ -27,14 +28,16 @@ router.get("/home", withAuth, async (req, res) => {
         [sequelize.fn("sum", sequelize.col("amount")), "total_amount"],
       ],
       group: ["category_id"],
-      where: { user_id: req.session.user_id },
+      where: { user_id: req.session.user_id},
       //join on Category to get the names
       include: [
         {
           model: Category,
           attributes: ["category_name"],
+          where: { expense: 1},
         },
       ],
+      
     });
     // Pass serialized data and session flag into template
     const userAMTbyCategory = userData.map((cat) => cat.get({ plain: true }));
@@ -43,6 +46,7 @@ router.get("/home", withAuth, async (req, res) => {
 
     const cd = [];
     const tamt = [];
+
 
     for (i = 0; i < userAMTbyCategory.length; i++) {
       cd.push(userAMTbyCategory[i].category.category_name);
@@ -87,15 +91,28 @@ router.get("/transactions", async (req, res) => {
 //Render Transactions
 router.get("/logger", withAuth, async (req, res) => {
   try {
-    const categoryData = await Category.findAll({
+    const categoryDataExpense = await Category.findAll({
       include: { all: true, nested: true },
-      where: { user_id: req.session.user_id },
+      where: { user_id: req.session.user_id, expense: true },
     });
+    const categoryDataIncome = await Category.findAll({
+      include: { all: true, nested: true },
+      where: { user_id: req.session.user_id, expense: false },
+    });
+
+
+
+
+
+
+
     // Pass serialized data and session flag into template
-    const categories = categoryData.map((cat) => cat.get({ plain: true }));
+    const categoriesExpense = categoryDataExpense.map((cat) => cat.get({ plain: true }));
+    const categoriesIncome = categoryDataIncome.map((cat) => cat.get({ plain: true }));
 
     res.render("logger", {
-      categories,
+      categoriesExpense,
+      categoriesIncome,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -171,6 +188,7 @@ router.post("/newcat", withAuth, async (req, res) => {
   try {
     const categoryData = await Category.create({
       category_name: req.body.category_name,
+      expense: req.body.expense,
       user_id: req.session.user_id,
     });
     if (!categoryData) {

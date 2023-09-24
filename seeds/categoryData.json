@@ -1,54 +1,73 @@
 [
   {
     "category_name": "Housing",
+    "expense": true,
     "user_id": "1"
   },
   {
     "category_name": "Foods",
+    "expense": true,
     "user_id": "1"
   },
   {
     "category_name": "Transportation",
+    "expense": true,
     "user_id": "1"
   },
   {
+    "category_name": "xmas gift",
+    "expense": false,
+    "user_id": "1"
+  },
+  
+  {
     "category_name": "Housing",
+    "expense": true,
     "user_id": "2"
   },
   {
     "category_name": "Foods",
+    "expense": true,
     "user_id": "2"
   },
   {
     "category_name": "Transportation",
+    "expense": true,
     "user_id": "2"
   },
   {
     "category_name": "Housing",
+    "expense": true,
     "user_id": "3"
   },
   {
     "category_name": "Foods",
+    "expense": true,
     "user_id": "3"
   },
   {
     "category_name": "Transportation",
+    "expense": true,
     "user_id": "3"
   },
   {
     "category_name": "Paycheck",
+    "expense": false,
     "user_id": "4"
   },
   {
     "category_name": "Car",
+    "expense": true,
     "user_id": "4"
   },
   {
     "category_name": "Parents",
+    "expense": true,
     "user_id": "4"
   },
   {
     "category_name": "Foods",
+    "expense": true,
     "user_id": "4"
   }
 ]

@@ -1,25 +1,44 @@
-
 <form class="form newcatpost" id="blogpost">
-<div class="form-group">
+  <div class="form-group">
 
-      <div class="mb-3">
-        <label
-          for="title"
-          class="form-label"
-        >New Category</label>
-        <textarea
-          class="form-control"
-          id="categoryname"
-          rows="1"
-          placeholder="New Category"
-        ></textarea>
-      </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">New Category</label>
+      <textarea
+        class="form-control"
+        id="categoryname"
+        rows="1"
+        placeholder="New Category"
+      ></textarea>
     </div>
-   
-   
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+  </div>
 
-  </form>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="flexRadioDefault"
+      id="1"
+      checked
+    />
+    <label class="form-check-label" for="Expense">
+      Expense
+    </label>
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="flexRadioDefault"
+      id="0"
+    />
+    <label class="form-check-label" for="Income">
+      Income
+    </label>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+
+</form>
 <script src="../js/newcategory.js"></script>

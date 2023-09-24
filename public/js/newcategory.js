@@ -4,11 +4,15 @@ const newCatFormHandler = async (event) => {
     // Collect values from the new post
     const category_name = document.querySelector('#categoryname').value.trim();
  
+    const expense = document.querySelector('input[name="flexRadioDefault"]:checked').id
+
+console.log(expense)
+
     if (category_name) {
       // Send a POST request to the Homeroutes
       const response = await fetch(`/newcat`, {
         method: 'POST',
-        body: JSON.stringify({ category_name }),
+        body: JSON.stringify({ category_name, expense }),
         headers: { 'Content-Type': 'application/json' },
       });
   

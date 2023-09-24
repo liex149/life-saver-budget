@@ -2,8 +2,6 @@
 
 function doughnut(labels, data){
 
-
-
 new Chart("myChart", {
   type: "doughnut",
   data: {
@@ -34,3 +32,5 @@ new Chart("myChart", {
 }
 
 doughnut([ 'Paycheck', 'Car', 'Foods', 'Parents' ],[ '58.42', '700.21', '200.42', '10.21' ]);
+
+module.exports = doughnut;

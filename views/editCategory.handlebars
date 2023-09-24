@@ -1,1 +1,31 @@
-<div>this is where you edit categories</div>
+{{#each categories as |category|}}
+  {{! add form here }}
+  <form
+    class="form update-form"
+    id="category"
+    data-index-number={{category.id}}
+  >
+    <div class="form-group px-2">
+
+      <div class="mb-3">
+        <textarea
+          class="form-control"
+          id="title"
+          rows="1"
+        >{{category.category_name}}</textarea>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+    <button
+      class="btn btn-sm btn-danger delete"
+      data-id="{{category.id}}"
+    >DELETE</button>
+  </form>
+
+{{/each}}
+
+<script src="../js/editcategory.js"></script>
+<script src="../js/deletecategory.js"></script>

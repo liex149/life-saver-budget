@@ -50,9 +50,10 @@ router.get("/home", withAuth, async (req, res) => {
     }
     console.log(cd);
     console.log(tamt);
-
-
     
+  
+
+
     res.render("home", {
       cd,
       tamt,
@@ -144,6 +145,26 @@ router.get("/editCategory", withAuth, async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", withAuth, async (req, res) => {
+  try {
+    const categoryData = await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!categoryData) {
+      res.status(404).json({ message: "No cateogory found with this id!" });
+      return;
+    }
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 router.all("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
@@ -153,5 +174,9 @@ router.all("/login", (req, res) => {
 
   res.render("login");
 });
+
+
+  
+
 
 module.exports = router;

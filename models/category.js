@@ -16,6 +16,10 @@ Category.init(
       allowNull: false,
       
     },
+    expense: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

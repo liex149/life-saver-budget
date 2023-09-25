@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 router.get('/', withAuth, async (req, res) => {
   try {
     console.log("Session User ID: ", req.session.user_id);
-
+    
     const transactionData = await Transaction.findAll({
       where: {
         user_id: req.session.user_id,  // Filter transactions based on logged-in user

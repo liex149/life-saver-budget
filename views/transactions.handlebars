@@ -1,1 +1,19 @@
-<div>Transaction History... This is where we view our transaction history, or look at graphs of all our spending</div>
+{{log this}}
+<div class="form-group">
+  <label for="Transactions List">Your Transactions</label>
+  
+  <div class="bg-light py-5">
+    <div>
+      <h4>Your Transactions:</h4>
+      {{#each transactions as |transaction|}}
+        <div class="transaction-item p-2 border rounded mb-2">
+          <p>Name: {{transaction.name}}</p>
+          <p>Total: ${{transaction.total}}</p>
+          <p>Date: {{transaction.date}}</p>
+          <p>Category: {{transaction.category}}</p>
+          <p>Comments: {{transaction.comments}}</p>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

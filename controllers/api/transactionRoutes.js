@@ -32,6 +32,7 @@ router.get('/', withAuth, async (req, res) => {
     );
 
     console.log("Transactions: ", transactions); 
+    console.log(JSON.stringify(transactions, null, 2));
 
     res.render('transactions', {  // Render using Handlebars
       transactions,

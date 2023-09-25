@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Transaction, User, Category } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // Create a new transaction
 router.post('/', async (req, res) => {
@@ -15,13 +16,31 @@ router.post('/', async (req, res) => {
 });
 
 // Get all transactions
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
-    const transactions = await Transaction.findAll({
+    console.log("Session User ID: ", req.session.user_id);
+    
+    const transactionData = await Transaction.findAll({
+      where: {
+        user_id: req.session.user_id,  // Filter transactions based on logged-in user
+      },
       include: [User, Category],  // Including associated User and Category details
     });
-    res.status(200).json(transactions);
+
+    const transactions = transactionData.map((transaction) => 
+      transaction.get({ plain: true })
+    );
+
+    console.log("Transactions: ", transactions); 
+    console.log(JSON.stringify(transactions, null, 2));
+
+    res.render('transactions', {  // Render using Handlebars
+      transactions,
+      logged_in: req.session.logged_in
+    });
   } catch (err) {
+    console.error("Error: ", err);
+    
     res.status(500).json(err);
   }
 });

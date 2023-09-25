@@ -30,4 +30,4 @@ new Chart("myChart", {
 });
 }
 
-doughnut([ 'Home', 'Car', 'Foods', 'Parents' ],[ '58.42', '-700.21', '200.42', '10.21' ]);
+// doughnut([ 'Home', 'Car', 'Foods', 'Parents' ],[ '58.42', '-700.21', '200.42', '10.21' ]);

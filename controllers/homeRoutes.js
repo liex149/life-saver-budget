@@ -59,8 +59,8 @@ router.get("/home", withAuth, async (req, res) => {
 
 
     res.render("home", {
-      cd,
-      tamt,
+      cd: cd,
+      tamt: tamt,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -69,9 +69,14 @@ router.get("/home", withAuth, async (req, res) => {
 });
 
 //Render Transactions
-router.get("/transactions", async (req, res) => {
+router.get("/transactions", withAuth, async (req, res) => {
   try {
+    console.log("Session User ID: ", req.session.user_id);
+    
     const transactionData = await Transaction.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
       include: [User, Category], // Including associated User and Category details
     });
     // Pass serialized data and session flag into template

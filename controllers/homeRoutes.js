@@ -78,6 +78,9 @@ router.get("/transactions", withAuth, async (req, res) => {
         user_id: req.session.user_id,
       },
       include: [User, Category], // Including associated User and Category details
+      order:[
+        ['date_created', 'DESC'],
+      ]
     });
     // Pass serialized data and session flag into template
     const transactions = transactionData.map((post) =>
@@ -133,6 +136,7 @@ router.post("/logTransaction", withAuth, async (req, res) => {
       amount: req.body.transactionAmount,
       user_id: req.session.user_id,
       category_id: req.body.cat_id,
+      notes: req.body.transactionNote,
     });
 
     if (!transactionData) {

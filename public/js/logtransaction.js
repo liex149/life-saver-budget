@@ -6,12 +6,16 @@ async function logTransactionFormHandler (cat_id) {
     .querySelector("#transactionAmt")
     .value.trim();
 
+    const transactionNote = document
+    .querySelector("#transactionNote")
+    .value.trim();
+
 
   if (transactionAmount) {
     // Send a POST request to the Homeroutes
     const response = await fetch(`/logTransaction`, {
       method: "POST",
-      body: JSON.stringify({ transactionAmount, cat_id }),
+      body: JSON.stringify({ transactionAmount, cat_id, transactionNote  }),
       headers: { "Content-Type": "application/json" },
     });
 

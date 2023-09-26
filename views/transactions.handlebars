@@ -1,11 +1,11 @@
 <div class="form-group">
-  <label for="Transactions List">Your Transactions</label>
+  <label for="Transactions List"></label>
   
-  <div class="bg-light py-5">
+  <div class="bg-dark py-2 text-light">
     <div>
       <h4>Your Transactions:</h4>
       {{#each transactions as |transaction|}}
-        <div class="transaction-item p-2 border rounded mb-2">
+        <div class="transaction-item p-2 border-bottom rounded mb-2">
           <p>Date: {{transaction.date_created}}</p>
           <p>Total: ${{transaction.amount}}</p>
           <p>Category: {{transaction.category.category_name}}</p>

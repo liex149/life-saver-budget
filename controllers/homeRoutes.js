@@ -68,6 +68,32 @@ router.get("/home", withAuth, async (req, res) => {
   }
 });
 
+//update your own post
+router.put("/transactions/:id", withAuth, async (req, res) => {
+  // update a blogpost by its `id` value
+  try {
+    const transactionData = await Transaction.update({
+      amount: req.body.transactionAmount,
+      category_id: req.body.cat_id,
+      notes: req.body.transactionNote,
+    },
+    {
+      where: {id: req.params.id},
+    }
+    
+    );
+
+    if (!transactionData) {
+      res.status(404).json({ message: "No blogpost found with that id!" });
+      return;
+    }
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 //Render Transactions
 router.get("/transactions", withAuth, async (req, res) => {
   try {
@@ -96,6 +122,34 @@ router.get("/transactions", withAuth, async (req, res) => {
   }
 });
 
+//Edit/Delete Transaction
+router.get("/transactions/:id", withAuth, async (req, res) => {
+  try {
+    const transactionData = await Transaction.findAll({
+      include: { all: true, nested: true },
+      where: { user_id: req.session.user_id, id: req.params.id },
+    });
+    const categoryData = await Category.findAll({
+      include: { all: true, nested: true },
+      where: { user_id: req.session.user_id},
+    });
+
+    const categories = categoryData.map((cat) => cat.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    const transactions = transactionData.map((cat) => cat.get({ plain: true }));
+
+    res.render("editTran", {
+      transactions,
+      categories,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 //Render Transactions
 router.get("/logger", withAuth, async (req, res) => {
   try {
@@ -107,12 +161,6 @@ router.get("/logger", withAuth, async (req, res) => {
       include: { all: true, nested: true },
       where: { user_id: req.session.user_id, expense: false },
     });
-
-
-
-
-
-
 
     // Pass serialized data and session flag into template
     const categoriesExpense = categoryDataExpense.map((cat) => cat.get({ plain: true }));

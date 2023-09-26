@@ -10,6 +10,7 @@
           <p>Total: ${{transaction.amount}}</p>
           <p>Category: {{transaction.category.category_name}}</p>
           <p>Comments: {{transaction.notes}}</p>
+          <a href="/transactions/{{transaction.id}}">Edit</a>
         </div>
       {{/each}}
     </div>

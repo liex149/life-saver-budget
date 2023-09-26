@@ -1,0 +1,47 @@
+<h5>Edit the Following Transaction: </h5>
+{{#each transactions as |transaction|}}
+        <div class="transaction-item p-2 border rounded mb-2">
+          <p>Date: {{transaction.date_created}}</p>
+          <p>Total: ${{transaction.amount}}</p>
+          <p>Category: {{transaction.category.category_name}}</p>
+          <p>Comments: {{transaction.notes}}</p>
+        </div>
+{{/each}}
+{{#each transactions as |transaction|}}
+<form id="tranid" data-index-number='{{transaction.id}}'>
+  <div class="form-group">
+    <label for="total">Total: </label>
+    <input type="text" class="form-control" id="total" aria-describedby="emailHelp" placeholder="{{transaction.amount}}">
+   </div>
+  <div class="form-group">
+    <label for="notes">Comments:</label>
+    <input type="text" class="form-control" id="note" aria-describedby="emailHelp" placeholder="{{transaction.notes}}">
+   </div>
+
+
+
+
+{{/each}}
+  <div>
+    <h4>Category</h4>
+    {{#each categories as |category|}}
+
+
+ <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="flexRadioDefault"
+      id="{{category.id}}"
+      
+    />
+    <label class="form-check-label" for="category">
+      {{category.category_name}}
+    </label>
+  </div>
+
+    {{/each}}
+  <button type="click" class="btn btn-primary edittran">Submit</button>
+
+  </form>
+  <script src="../js/editTransaction.js"></script>

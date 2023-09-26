@@ -33,12 +33,13 @@ router.get("/home", withAuth, async (req, res) => {
       include: [
         {
           model: Category,
-          attributes: ["category_name"],
-          where: { expense: 1},
+          attributes: ["category_name", "expense"],
+          // where: { expense: 1},
         },
       ],
       
     });
+
     // Pass serialized data and session flag into template
     const userAMTbyCategory = userData.map((cat) => cat.get({ plain: true }));
 
@@ -54,14 +55,28 @@ router.get("/home", withAuth, async (req, res) => {
     }
     console.log(cd);
     console.log(tamt);
-    
-  
 
+    let totalIncome = 0;
+    let totalExpenses = 0;
+
+    for (const transaction of userAMTbyCategory) {
+      const transactionAmount = parseFloat(transaction.total_amount);
+      // Check if the transaction's category is an expense
+      if (transaction.category.expense) {
+        totalExpenses += transactionAmount;
+      } else {
+
+        totalIncome += transactionAmount;
+      }
+    }
+
+    const totalRemaining = totalIncome - totalExpenses;
 
     res.render("home", {
       cd: cd,
       tamt: tamt,
       logged_in: req.session.logged_in,
+      totalRemaining: totalRemaining
     });
   } catch (err) {
     res.status(500).json(err);

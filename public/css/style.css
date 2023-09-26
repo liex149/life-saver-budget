@@ -5,5 +5,8 @@ form {
 .image {
     background: url("../map.jpg") no-repeat center bottom/cover;
     height: 100vh;
+    background-attachment: fixed;
 
 }
+
+

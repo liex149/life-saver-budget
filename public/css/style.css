@@ -2,3 +2,8 @@ form {
     padding: 10;
 }
 
+.image {
+    background: url("../map.jpg") no-repeat center bottom/cover;
+    height: 100vh;
+
+}

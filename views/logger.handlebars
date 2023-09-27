@@ -1,62 +1,48 @@
-<div class="form-group">
-  <label for="Log Transaction">Log Transaction</label>
-  <input
-    type="number"
-    class="form-control my-2"
-    id="transactionAmt"
-    placeholder="Enter Transaction Amount"
-  />
-  <small id="emailHelp" class="fs-5 form-text text-light">Enter a transaction amount,
-  then submit by clicking a category</small>
-</div>
+<div>
+  <div class="bg-light rounded p-2">
+    <div class="form-group text-dark">
+      <label for="Log Transaction">Log Transaction:</label>
+      <input type="number" class="form-control my-2" id="transactionAmt" placeholder="Enter Transaction Amount" />
+      <small id="emailHelp" class="fs-6 form-text text-dark">Enter a transaction amount,
+        then submit by clicking a category</small>
+    </div>
+  </div>
 
+  <div class="bg-light rounded p-2 my-2">
+    <div class="form-group text-dark">
+      <label for="Log Transaction">Note:</label>
+      <input type="text" class="form-control my-2" id="transactionNote" placeholder="Optionally, add a note" />
+    </div>
+  </div>
 
+  <div class="bg-light p-2 my-2 rounded">
 
-<div class="form-group">
-  <label for="Log Transaction">Note:</label>
-  <input
-    type="text"
-    class="form-control my-2"
-    id="transactionNote"
-    placeholder="Optionally, add a note"
-  />
-</div>
-
-
-<div class="bg-light p-5 rounded-5">
-
-  <div>
-    <h4>Expenses</h4>
-    {{#each categoriesExpense as |category|}}
+    <div>
+      <h4>Expenses</h4>
+      {{#each categoriesExpense as |category|}}
       {{#if category.expense}}
 
-        <button
-          id="category"
-          class="newTransaction btn btn-danger my-2"
-          data-index-number="{{category.id}}"
-        >{{category.category_name}}</button>
+      <button id="category" class="newTransaction btn btn-danger my-2"
+        data-index-number="{{category.id}}">{{category.category_name}}</button>
 
       {{/if}}
-    {{/each}}
+      {{/each}}
 
-  </div>
-  <div>
-    <h4>Income</h4>
+    </div>
+    <div>
+      <h4>Income</h4>
 
-    {{#each categoriesIncome as |category|}}
+      {{#each categoriesIncome as |category|}}
 
       {{#if category.expense}}{{else}}
-        <button
-          id="category"
-          class="newTransaction btn btn-success my-2"
-          data-index-number="{{category.id}}"
-        >{{category.category_name}}</button>
+      <button id="category" class="newTransaction btn btn-success my-2"
+        data-index-number="{{category.id}}">{{category.category_name}}</button>
 
       {{/if}}
-    {{/each}}
+      {{/each}}
 
+    </div>
   </div>
-
 </div>
 <a href="/editCategory" class="btn btn-info">Edit Categories</a>
 <script src="./js/logtransaction.js"></script>

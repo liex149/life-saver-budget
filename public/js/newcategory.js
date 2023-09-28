@@ -28,5 +28,5 @@ console.log(expense)
 
   document
     .querySelector('.newcatpost')
-    .addEventListener('submit', newCatFormHandler);
+    .addEventListener('click', newCatFormHandler);
   

@@ -280,6 +280,7 @@ router.post("/newcat", withAuth, async (req, res) => {
   }
 });
 
+//delete Category by id
 router.delete("/delete/:id", withAuth, async (req, res) => {
   try {
     const categoryData = await Category.destroy({
@@ -299,6 +300,25 @@ router.delete("/delete/:id", withAuth, async (req, res) => {
   }
 });
 
+//delete Transaction by id
+router.delete("/deletetransaction/:id", withAuth, async (req, res) => {
+  try {
+    const transactionData = await Transaction.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!transactionData) {
+      res.status(404).json({ message: "No cateogory found with this id!" });
+      return;
+    }
+
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.all("/login", (req, res) => {
   // If the user is already logged in, redirect the request to another route

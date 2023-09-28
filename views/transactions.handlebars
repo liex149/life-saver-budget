@@ -11,9 +11,11 @@
           <p>Total: ${{transaction.amount}}</p>
           <p>Category: {{transaction.category.category_name}}</p>
           <p>Comments: {{transaction.notes}}</p>
-          <a href="/transactions/{{transaction.id}}">Edit</a>
+          <button class="btn btn-primary" href="/transactions/{{transaction.id}}">Edit</button>
+          <button class="btn btn-danger" id="transactiondelete" data-index-number="{{transaction.id}}"> Delete </button>
         </div>
       {{/each}}
     </div>
   </div>
 </div>
+ <script src="../js/deleteTransaction.js"></script>

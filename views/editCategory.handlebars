@@ -1,24 +1,26 @@
-{{#if categories}}
-{{#each categories as |category|}}
-  {{! add form here }}
+<div class="flex-row bg-light rounded p-3">
+  {{#if categories}}
+    {{#each categories as |category|}}
+      {{! add form here }}
 
-    <div class="form-group px-2">
+      <div class="form-group px-2 shadow-lg rounded my-2 p-1">
 
-      <div class="mb-3">
-        <div
-          id="title"
-        >{{category.category_name}}</div>
+        <div class="mb-3">
+          <div id="title">{{category.category_name}}</div>
 
-        <button
-          class="btn btn-sm btn-danger delete"
-          id="category"
-          data-index-number='{{category.id}}'
-        >DELETE</button>
+          <button
+            class="btn btn-sm btn-danger delete"
+            id="category"
+            data-index-number="{{category.id}}"
+          >DELETE</button>
+        </div>
       </div>
-    </div>
-{{/each}}
-{{/if}}
-<a href="/newcat" class="btn btn-info">Add New Category</a>
+
+    {{/each}}
+  {{/if}}
+</div>
+
+<a href="/newcat" class="btn btn-info my-2">Add New Category</a>
 
 <script src="../js/newcategory.js"></script>
 <script src="../js/deletecategory.js"></script>

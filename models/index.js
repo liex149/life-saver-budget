@@ -1,5 +1,5 @@
 const User = require("./User");
-const Transaction = require("./Transaction");
+const Transaction = require("./transaction");
 const Category = require("./category");
 
 User.hasMany(Transaction, {

@@ -1,12 +1,13 @@
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<div>
-  <h2>Total Remaining: ${{{totalRemaining}}}</h2>
+<div class="bg-light rounded py-3">
+  <h2 class="text-center">Total Remaining: ${{{totalRemaining}}}</h2>
   <canvas id="myChart"></canvas>
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const labels = {{{json cd}}};
-    const data = {{{json tamt}}};
+    const labels = {{{json expenseLabelArray}}};
+    const data = {{{json expenseArray}}};
     doughnut(labels, data);
   });
 </script>

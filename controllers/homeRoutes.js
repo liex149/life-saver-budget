@@ -27,7 +27,7 @@ router.get("/home", withAuth, async (req, res) => {
         "category_id",
         [sequelize.fn("sum", sequelize.col("amount")), "total_amount"],
       ],
-      group: ["category_id"],
+      group: ["category_id", "expense"],
       where: { user_id: req.session.user_id},
       //join on Category to get the names
       include: [
@@ -38,7 +38,7 @@ router.get("/home", withAuth, async (req, res) => {
         },
       ],
       
-    });
+    });    
 
     // Pass serialized data and session flag into template
     const userAMTbyCategory = userData.map((cat) => cat.get({ plain: true }));
@@ -55,26 +55,33 @@ router.get("/home", withAuth, async (req, res) => {
     }
     console.log(cd);
     console.log(tamt);
-
+    let expenseArray = [];
+    let expenseLabelArray = [];
     let totalIncome = 0;
     let totalExpenses = 0;
 
     for (const transaction of userAMTbyCategory) {
       const transactionAmount = parseFloat(transaction.total_amount);
+      const transactionLabel = transaction.category.category_name;
       // Check if the transaction's category is an expense
       if (transaction.category.expense) {
         totalExpenses += transactionAmount;
+        expenseArray.push(transactionAmount);
+        expenseLabelArray.push(transactionLabel);
       } else {
 
         totalIncome += transactionAmount;
+        
       }
     }
 
     const totalRemaining = totalIncome - totalExpenses;
-
+    totalRemaining.toFixed(2)
     res.render("home", {
       cd: cd,
       tamt: tamt,
+      expenseArray: expenseArray,
+      expenseLabelArray: expenseLabelArray,
       logged_in: req.session.logged_in,
       totalRemaining: totalRemaining
     });

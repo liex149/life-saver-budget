@@ -83,7 +83,7 @@ router.get("/home", withAuth, async (req, res) => {
       expenseArray: expenseArray,
       expenseLabelArray: expenseLabelArray,
       logged_in: req.session.logged_in,
-      totalRemaining: totalRemaining
+      totalRemaining: totalRemaining.toFixed(2)
     });
   } catch (err) {
     res.status(500).json(err);
